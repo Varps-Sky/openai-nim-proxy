@@ -25,8 +25,9 @@ const PROXY_SECRET = process.env.PROXY_SECRET;
 
 app.use((req, res, next) => {
   if (req.path === '/health') return next();
-  const auth = req.headers['x-proxy-key'];
-  if (auth !== PROXY_SECRET) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (token !== PROXY_SECRET) {
     return res.status(401).json({ error: { message: 'Unauthorized', type: 'auth_error' } });
   }
   next();
