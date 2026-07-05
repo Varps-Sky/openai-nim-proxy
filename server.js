@@ -20,6 +20,18 @@ const SHOW_REASONING = false; // Set to true to show reasoning with <think> tags
 // 🔥 THINKING MODE TOGGLE - Enables thinking for specific models that support it
 const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwargs thinking parameter
 
+// 🔒 authentication for NIM key //
+const PROXY_SECRET = process.env.PROXY_SECRET;
+
+app.use((req, res, next) => {
+  if (req.path === '/health') return next();
+  const auth = req.headers['x-proxy-key'];
+  if (auth !== PROXY_SECRET) {
+    return res.status(401).json({ error: { message: 'Unauthorized', type: 'auth_error' } });
+  }
+  next();
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
