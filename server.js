@@ -18,7 +18,7 @@ const NIM_API_KEY = process.env.NIM_API_KEY;
 const SHOW_REASONING = false; // Set to true to show reasoning with <think> tags
 
 // 🔥 THINKING MODE TOGGLE - Enables thinking for specific models that support it
-const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwargs thinking parameter
+const ENABLE_THINKING_MODE = true; // Set to true to enable chat_template_kwargs thinking parameter
 
 // 🔒 authentication for NIM key //
 const PROXY_SECRET = process.env.PROXY_SECRET;
@@ -73,7 +73,7 @@ const nimRequest = {
   temperature: temperature || 0.6,
   max_tokens: max_tokens || 9024,
   stream: stream || false,
-  ...(ENABLE_THINKING_MODE ? { chat_template_kwargs: { thinking: true } } : {})
+  ...(ENABLE_THINKING_MODE ? { chat_template_kwargs: { enable_thinking: true } } : {})
 };
     
     // Make request to NVIDIA NIM API
