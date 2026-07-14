@@ -84,6 +84,8 @@ const nimRequest = {
       },
       responseType: stream ? 'stream' : 'json'
     });
+
+    console.log('RAW NIM RESPONSE:', JSON.stringify(response.data));
     
     if (stream) {
       // Handle streaming response with reasoning
